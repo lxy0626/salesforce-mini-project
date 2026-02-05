@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Application__c</entityName>
+    <fieldName>Application_Status__c</fieldName>
+    <masterLabel>status</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>RecordTypeId</fieldNames>
+        <picklistValueName>Approved</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>RecordTypeId</fieldNames>
+        <picklistValueName>Drafted</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>RecordTypeId</fieldNames>
+        <picklistValueName>Pending Review</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>RecordTypeId</fieldNames>
+        <picklistValueName>Rejected</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>RecordTypeId</fieldNames>
+        <picklistValueName>Submitted</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>General_Application</recordTypeName>
+</PathAssistant>
