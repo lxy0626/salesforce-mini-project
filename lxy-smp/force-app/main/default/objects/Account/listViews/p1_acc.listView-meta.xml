@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>p1_acc</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <filterScope>Mine</filterScope>
+    <label>p1_acc</label>
+    <sharedTo>
+        <role>Customer_Support_International</role>
+        <role>test</role>
+    </sharedTo>
+</ListView>
