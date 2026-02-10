@@ -3,7 +3,7 @@
 	"edition": "Developer",
     "adminEmail": "xylai224@gmail.com.training",
 	"features": [
-		"EnableSetPasswordInApi", "EinsteinGPTForDevelopers"
+		"EnableSetPasswordInApi", "EinsteinGPTForDevelopers" , "Communities"
 	],
 	"settings": {
 		"lightningExperienceSettings": {
@@ -17,10 +17,7 @@
 			"enableNetworksEnabled": true
 		},
 		"securitySettings": {
-			"enableAdminLoginAsAnyUser": true,
-			"sessionSettings": {
-				"forceRelogin": false
-			}
+			"enableAdminLoginAsAnyUser": true
 		},
 		"userManagementSettings": {
 			"permsetsInFieldCreation": true
