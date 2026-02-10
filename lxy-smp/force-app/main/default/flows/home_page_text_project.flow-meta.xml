@@ -2,6 +2,50 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assignment_1</name>
+        <label>Assignment 1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>listing</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>counter</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>listing</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>. </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>listing</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>add_listing.Label</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>listing</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>br</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>counter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>add_listing</targetReference>
+        </connector>
+    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
@@ -9,8 +53,32 @@
         </value>
     </customProperties>
     <environments>Default</environments>
+    <formulas>
+        <name>br</name>
+        <dataType>String</dataType>
+        <expression>BR()</expression>
+    </formulas>
+    <formulas>
+        <name>reqtype</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!current_contact.Nationality__c})= &quot;Malaysian&quot;, &quot;Domestic&quot;, &quot;International&quot;)</expression>
+    </formulas>
     <interviewLabel>home page text project {!$Flow.CurrentDateTime}</interviewLabel>
     <label>home page text project</label>
+    <loops>
+        <name>add_listing</name>
+        <label>add listing</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>get_req_type_list</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assignment_1</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>rio_home_text</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -30,6 +98,48 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>current_contact</name>
+        <label>current contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>get_req_type_list</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.ContactId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>get_req_type_list</name>
+        <label>get req type list</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>add_listing</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Requirement_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>reqtype</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Program_Requirement__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>rio_home_text</name>
         <label>rio_home_text</label>
@@ -56,7 +166,7 @@
         </fields>
         <fields>
             <name>ugtext</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 20px;&quot;&gt;Domestic&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;ID&lt;/li&gt;&lt;li&gt;Transcript&lt;/li&gt;&lt;li&gt;high School Graduation Certificate&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 20px;&quot;&gt;International&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Passport&lt;/li&gt;&lt;li&gt;Transcript&lt;/li&gt;&lt;li&gt;high School Graduation Certificate&lt;/li&gt;&lt;li&gt;IELTS Transcript&lt;/li&gt;&lt;/ol&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 20px;&quot;&gt;{!reqtype}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;{!listing}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -123,8 +233,26 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>rio_home_text</targetReference>
+            <targetReference>current_contact</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>counter</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>1.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>listing</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

@@ -13,7 +13,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Application__c.Application_Status__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -51,16 +51,16 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Application__c.Source__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Gender__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+        <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Nationality__c</field>
         <readable>true</readable>
@@ -83,7 +83,7 @@
     <layoutAssignments>
         <layout>Contact-Contact Layout</layout>
     </layoutAssignments>
-    <layoutAssignments>
+        <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -104,11 +104,6 @@
         <recordType>Account.Academic_Program</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
-    <!-- <recordTypeVisibilities>
-        <default>true</default>
-        <recordType>Account.Account_Type</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities> -->
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account.Administrative</recordType>

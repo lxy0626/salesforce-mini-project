@@ -1,16 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assignment_2</name>
+        <label>Assignment 2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>app_var.Application_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>app_tye</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>create_app</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>reqlisting</name>
+        <label>reqlisting</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>reqlist</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>•</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>reqlist</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_1.Label</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>reqlist</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>br</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_1</targetReference>
+        </connector>
+    </assignments>
     <customProperties>
         <name>ScreenProgressIndicator</name>
         <value>
             <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
         </value>
     </customProperties>
+    <dynamicChoiceSets>
+        <name>reqtypecssss</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Application_Type__c</picklistField>
+        <picklistObject>Application__c</picklistObject>
+    </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <description>domestic or international</description>
+        <name>app_tye</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!contact_var.Nationality__c})= &quot;Malaysian&quot;, &quot;Domestic&quot;, &quot;International&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>br</name>
+        <dataType>String</dataType>
+        <expression>BR()</expression>
+    </formulas>
     <interviewLabel>app form {!$Flow.CurrentDateTime}</interviewLabel>
     <label>app form</label>
+    <loops>
+        <name>Loop_1</name>
+        <label>Loop 1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>get_req_type</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>reqlisting</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>reqpage</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -35,22 +114,25 @@
         <label>create app</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>get_req_type</targetReference>
+        </connector>
         <inputAssignments>
             <field>Applicant__c</field>
             <value>
-                <elementReference>create_contact</elementReference>
+                <elementReference>Get_Applicant.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Application_Status__c</field>
+            <value>
+                <stringValue>Submitted</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Application_Type__c</field>
             <value>
-                <elementReference>app_var.Application_Type__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Applied_Program__c</field>
-            <value>
-                <elementReference>app_var.Applied_Program__c</elementReference>
+                <elementReference>app_tye</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -59,56 +141,158 @@
                 <elementReference>app_var.Highest_Education_Level__c</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>012Ru00000DhzgiIAB</stringValue>
+            </value>
+        </inputAssignments>
         <object>Application__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordCreates>
-        <name>create_contact</name>
-        <label>create contact</label>
+    <recordLookups>
+        <name>Get_Applicant</name>
+        <label>Get Applicant</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>create_app</targetReference>
+            <targetReference>ug_app_form</targetReference>
         </connector>
-        <inputAssignments>
-            <field>Birthdate</field>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
             <value>
-                <elementReference>contact_var.Birthdate</elementReference>
+                <elementReference>$User.ContactId</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>FirstName</field>
-            <value>
-                <elementReference>First_Name</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Gender__c</field>
-            <value>
-                <elementReference>contact_var.Gender__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>LastName</field>
-            <value>
-                <elementReference>Last_Name</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>MobilePhone</field>
-            <value>
-                <elementReference>contact_var.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Nationality__c</field>
-            <value>
-                <elementReference>contact_var.Nationality__c</elementReference>
-            </value>
-        </inputAssignments>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Contact</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
+    </recordLookups>
+    <recordLookups>
+        <name>get_req_type</name>
+        <label>get req type</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Requirement_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>app_var.Application_Type__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Program_Requirement__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>reqpage</name>
+        <label>reqpage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>thankyoupage</targetReference>
+        </connector>
+        <fields>
+            <name>ugreqtype</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Undergraduate Requirement Type&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>domesticLabel</name>
+            <fieldText>&lt;p&gt;{!app_var.Application_Type__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>reqlisttext</name>
+            <fieldText>&lt;p&gt;{!reqlist}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <name>AppFile</name>
+            <extensionName>forceContent:fileUpload</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Application File</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>thankyoupage</name>
+        <label>thankyoupage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>thankyoutext</name>
+            <fieldText>&lt;p&gt;Thank you for applying for the undergraduate program. You will be updated through email regarding the application progress.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>ug_app_form</name>
         <label>ug app form</label>
@@ -118,7 +302,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>create_contact</targetReference>
+            <targetReference>Assignment_2</targetReference>
         </connector>
         <fields>
             <name>header_text</name>
@@ -136,6 +320,9 @@
         <fields>
             <name>First_Name</name>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_Applicant.FirstName</elementReference>
+            </defaultValue>
             <fieldText>First Name</fieldText>
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -152,6 +339,9 @@
         <fields>
             <name>Last_Name</name>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_Applicant.LastName</elementReference>
+            </defaultValue>
             <fieldText>Last Name</fieldText>
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -239,6 +429,20 @@
             <fieldType>ObjectProvided</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
+            <objectFieldReference>app_var.Highest_Education_Level__c</objectFieldReference>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
             <objectFieldReference>app_var.Source__c</objectFieldReference>
             <styleProperties>
                 <verticalAlignment>
@@ -249,34 +453,7 @@
                 </width>
             </styleProperties>
         </fields>
-        <fields>
-            <fieldType>ObjectProvided</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <objectFieldReference>app_var.Applied_Program__c</objectFieldReference>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <fields>
-            <fieldType>ObjectProvided</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <objectFieldReference>app_var.Application_Type__c</objectFieldReference>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -284,7 +461,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>ug_app_form</targetReference>
+            <targetReference>Get_Applicant</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -303,5 +480,12 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Contact</objectType>
+    </variables>
+    <variables>
+        <name>reqlist</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
