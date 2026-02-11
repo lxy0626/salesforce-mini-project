@@ -158,8 +158,9 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Application</label>
     <nameField>
+        <displayFormat>APP-{000000}</displayFormat>
         <label>Application Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Applications</pluralLabel>
     <searchLayouts></searchLayouts>
