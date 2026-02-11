@@ -141,12 +141,6 @@
                 <elementReference>app_var.Highest_Education_Level__c</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <stringValue>012Ru00000DhzgiIAB</stringValue>
-            </value>
-        </inputAssignments>
         <object>Application__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
