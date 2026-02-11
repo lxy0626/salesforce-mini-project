@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowTest xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flowApiName>assign_program_requirements</flowApiName>
+    <label>domestic application requirement</label>
+    <testPoints>
+        <elementApiName>Start</elementApiName>
+        <parameters>
+            <leftValueReference>$Record</leftValueReference>
+            <type>InputTriggeringRecordInitial</type>
+            <value>
+                <sobjectValue>{&quot;Applicant__c&quot;:&quot;003Ru00000kt6PAIAY&quot;,&quot;Application_Status__c&quot;:&quot;Drafted&quot;,&quot;Application_Type__c&quot;:&quot;Domestic&quot;,&quot;Highest_Education_Level__c&quot;:&quot;High School&quot;,&quot;Name&quot;:&quot;a01Ru00001DbnJp&quot;,&quot;OwnerId&quot;:&quot;005Ru00000QoFLIIA3&quot;,&quot;RecordTypeId&quot;:&quot;012Ru00000DhzgiIAB&quot;,&quot;attributes&quot;:{&quot;type&quot;:{&quot;value&quot;:&quot;Application__c&quot;}}}</sobjectValue>
+            </value>
+        </parameters>
+    </testPoints>
+    <testPoints>
+        <assertions>
+            <conditions>
+                <leftValueReference>Loop_1.Requirement_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Domestic</stringValue>
+                </rightValue>
+            </conditions>
+            <errorMessage>retrieve type error</errorMessage>
+        </assertions>
+        <elementApiName>Finish</elementApiName>
+    </testPoints>
+</FlowTest>
