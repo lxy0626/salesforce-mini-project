@@ -60,11 +60,11 @@
         <field>Contact.Gender__c</field>
         <readable>true</readable>
     </fieldPermissions>
-            <fieldPermissions>
+    <!-- <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Nationality__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions> -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Program_Requirement__mdt.Requirement_Type__c</field>
@@ -83,7 +83,7 @@
     <layoutAssignments>
         <layout>Contact-Contact Layout</layout>
     </layoutAssignments>
-        <layoutAssignments>
+    <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
