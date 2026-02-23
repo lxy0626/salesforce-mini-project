@@ -12,6 +12,7 @@
     <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
     <label>Admission</label>
     <navType>Standard</navType>
+    <tabs>Admission_Overview</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>Application__c</tabs>
