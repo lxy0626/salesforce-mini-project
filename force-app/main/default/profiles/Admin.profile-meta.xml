@@ -127,6 +127,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
+        <tab>Admission_Overview</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Application__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
